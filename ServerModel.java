@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ServerModel {
+public class ServerModel implements ServerM{
     File logs;
 
 
@@ -24,7 +24,7 @@ public class ServerModel {
 
     }
 
-    public String getLogs()
+    public String getLog()
     {
         StringBuilder text = new StringBuilder();
         try(FileReader fileReader = new FileReader("logs.txt")) {

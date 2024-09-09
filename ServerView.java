@@ -2,9 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-public class ServerView extends JFrame{
+public class ServerView extends JFrame implements ServerW{
 
     Server server;
 
@@ -73,9 +72,9 @@ public class ServerView extends JFrame{
 
                 writeText(MSG_STOP);
                 server.setIsWorked(false);
-                for(ClientGUIView client:server.clients)
+                for(ClientController client:server.clients)
                 {
-                    client.disconnect();
+                    client.clientView.disconnect();
                 }
             }
         });
@@ -83,7 +82,7 @@ public class ServerView extends JFrame{
 
     }
 
-
+    @Override
     public void writeText(String  text)
     {
         if(server.getIsWorked())

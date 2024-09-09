@@ -3,21 +3,30 @@ import java.util.ArrayList;
 public class Server {
 
 
-    public ArrayList<ClientGUIView> clients;
-    private String ip = "1";
-    private String port = "8189";
+    public ArrayList<ClientController> clients;
+
     private boolean isWorked = false;
 
 
-    ServerModel serverModel;
-    ServerView serverView;
+    ServerM serverModel;
+    ServerW serverView;
     Server()
     {
-        serverModel = new ServerModel();
-        serverView = new ServerView(this);
 
+        serverView = setView(new ServerView(this));
+        serverModel = setModel(new ServerModel());
         clients = new ArrayList<>();
 
+    }
+
+    private ServerW setView(ServerView serverView)
+    {
+        return serverView;
+    }
+
+    private ServerM setModel(ServerM serverModel)
+    {
+        return serverModel;
     }
 
     public void writeText(String text)
@@ -26,10 +35,6 @@ public class Server {
         {
             serverView.writeText(text);
             serverModel.addLog(text);
-
-
-
-
         }
     }
 
@@ -42,7 +47,7 @@ public class Server {
         isWorked = value;
     }
 
-    public void addClient(ClientGUIView client)
+    public void addClient(ClientController client)
     {
         clients.add(client);
     }
@@ -50,11 +55,11 @@ public class Server {
     public void sendClients(String text)
     {
 
-            for(ClientGUIView client : clients)
+            for(ClientController client : clients)
             {
-                if(client.isConnected)
+                if(client.getIsConnected())
                 {
-                    client.sendMessage(text);
+                    client.addText(text);
                 }
 
             }
@@ -62,9 +67,12 @@ public class Server {
 
     public String getLogs()
     {
+        return serverModel.getLog();
+    }
 
-        return serverModel.getLogs();
-
+    public ArrayList<ClientController> getClients()
+    {
+        return clients;
     }
 
 
