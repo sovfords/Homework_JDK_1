@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 public class ClientGUIView extends JFrame
 {
 
-    boolean isConnected = false;
+
     public String nickname;
-    Server server;
+
+    ClientController clientController;
+
 
     JPanel upComponents;
     JPanel downComponents;
@@ -30,9 +32,10 @@ public class ClientGUIView extends JFrame
     int POS_Y = 400;
 
 
-    ClientGUIView(Server server)
+    ClientGUIView(ClientController clientController)
     {
-        this.server = server;
+        this.clientController = clientController;
+
         upComponents =new JPanel();
         downComponents = new JPanel(new BorderLayout());
         btnLogin = new JButton("login");
@@ -71,11 +74,11 @@ public class ClientGUIView extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                if (server.getIsWorked() && isConnected)
+                if (clientController.getIsWorked() && clientController.getIsConnected())
                 {
-                    server.writeText(nickname + ": " +messageField.getText());
+                    clientController.sendText(nickname + ": " +messageField.getText());
 
-                    server.sendClients(nickname + ": " + messageField.getText());
+                    clientController.sendClients(nickname + ": " + messageField.getText());
                     messageField.setText("");
 
 
@@ -100,18 +103,18 @@ public class ClientGUIView extends JFrame
 
                     nickname = nicknameField.getText();
 
-                if( server.getIsWorked())
+                if( clientController.getIsWorked())
                 {
                     setTitle("client:" + nickname);
                     upComponents.setVisible(false);
                     clientText.append("Подключение успешно! \n");
-                    isConnected = true;
+                    clientController.setIsConnected(true);
 
-                    clientText.append(server.getLogs());
+                    clientText.append(clientController.getLogs());
 
 
 
-                    server.writeText(nickname + " подключился к беседе \n");
+                    clientController.sendText(nickname + " подключился к беседе \n");
 
 
                 }
@@ -124,17 +127,17 @@ public class ClientGUIView extends JFrame
             }
         });
 
-            server.addClient(this);
+            clientController.addClient();
 
 
         btnSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (server.getIsWorked() && isConnected)
+                if (clientController.getIsWorked() && clientController.getIsConnected())
                 {
-                    server.writeText(nickname + ": " +messageField.getText());
+                    clientController.sendText(nickname + ": " +messageField.getText());
 
-                    server.sendClients(nickname + ": " + messageField.getText());
+                    clientController.sendClients(nickname + ": " + messageField.getText());
                     messageField.setText("");
 
 
@@ -157,6 +160,6 @@ public class ClientGUIView extends JFrame
     public void disconnect()
     {
         upComponents.setVisible(true);
-        isConnected = false;
+        clientController.setIsConnected(false);
     }
 }
