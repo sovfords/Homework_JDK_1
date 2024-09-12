@@ -72,9 +72,9 @@ public class ServerView extends JFrame implements ServerW{
 
                 writeText(MSG_STOP);
                 server.setIsWorked(false);
-                for(ClientController client:server.clients)
+                for(ClientController client:server.getClients())
                 {
-                    client.clientView.disconnect();
+                    client.getClientView().disconnect();
                 }
             }
         });

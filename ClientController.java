@@ -1,8 +1,8 @@
 public class ClientController
 {
-    ClientView clientView;
+    private ClientView clientView;
     private boolean isConnected = false;
-    Server server;
+    private Server server;
 
     ClientController(Server server)
     {
@@ -51,5 +51,13 @@ public class ClientController
     public void addText(String text)
     {
         clientView.sendMessage(text);
+    }
+    public ClientView getClientView()
+    {
+        return clientView;
+    }
+    public Server getServer()
+    {
+        return server;
     }
 }

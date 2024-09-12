@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Server {
 
 
-    public ArrayList<ClientController> clients;
+    private ArrayList<ClientController> clients;
 
     private boolean isWorked = false;
 

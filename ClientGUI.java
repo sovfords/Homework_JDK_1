@@ -129,7 +129,7 @@ public class ClientGUI extends JFrame implements ClientView
         });
 
             clientController.addClient();
-            System.out.println(clientController.server.getClients());
+            System.out.println(clientController.getServer().getClients());
 
 
         btnSend.addActionListener(new ActionListener() {
